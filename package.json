@@ -1,10 +1,11 @@
 {
-  "name": "imf-test-manager",
+  "name": "@imf/test-manager",
   "version": "1.0.0",
-  "description": "Intelligent Monitoring Framework - Test Data Manager",
+  "description": "Intelligent Monitoring Framework - Test Data Manager and Generator",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "npm run clean && tsc",
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js",
     "test": "vitest",
@@ -12,11 +13,26 @@
     "cli": "tsx src/cli/simple-cli.ts",
     "clean": "rm -rf dist",
     "lint": "eslint src --ext .ts",
-    "format": "prettier --write src/**/*.ts"
+    "format": "prettier --write src/**/*.ts",
+    "prepublishOnly": "npm run build && npm test",
+    "prepack": "npm run build"
   },
   "bin": {
-    "imf-test-manager": "dist/cli/index.js",
-    "imf-test": "dist/cli/index.js"
+    "imf-test-manager": "dist/cli/simple-cli.js",
+    "imf-test": "dist/cli/simple-cli.js"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simonjanke/imf-test-manager.git"
+  },
+  "homepage": "https://github.com/simonjanke/imf-test-manager#readme",
+  "bugs": {
+    "url": "https://github.com/simonjanke/imf-test-manager/issues"
   },
   "keywords": [
     "monitoring",

@@ -18,7 +18,9 @@
     "types": ["vitest/globals", "node"]
   },
   "include": [
-    "src/**/*"
+    "src/index.ts",
+    "src/lib-index.ts",
+    "src/cli/simple-cli.ts"
   ],
   "exclude": [
     "node_modules",

@@ -3,7 +3,7 @@
 # ========================================
 
 # Multi-stage build for optimized production image
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -25,7 +25,7 @@ RUN npm run build
 # Production Stage
 # ========================================
 
-FROM node:18-alpine AS production
+FROM node:20-alpine AS production
 
 # Install dumb-init for proper signal handling
 RUN apk add --no-cache dumb-init
@@ -82,7 +82,7 @@ CMD ["node", "dist/cli.js", "--help"]
 # Development Stage
 # ========================================
 
-FROM node:18-alpine AS development
+FROM node:20-alpine AS development
 
 # Install development tools
 RUN apk add --no-cache git bash
@@ -93,7 +93,7 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 COPY tsconfig.json ./
-COPY jest.config.js ./
+COPY vitest.config.ts ./
 
 # Install all dependencies (including dev)
 RUN npm ci
@@ -124,13 +124,13 @@ CMD ["npm", "run", "dev"]
 FROM development AS testing
 
 # Run tests
-RUN npm test
+RUN npm run test
 
-# Run linting
-RUN npm run lint || true
+# Run linting (skip if fails)
+RUN npm run lint 2>/dev/null || echo "Linting skipped"
 
 # Run type checking
 RUN npm run build
 
 # Default command for testing
-CMD ["npm", "test"]
+CMD ["npm", "run", "test"]

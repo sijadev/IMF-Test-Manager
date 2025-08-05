@@ -1,0 +1,59 @@
+# Source files
+src/
+tests/
+
+# Development files
+.eslint*
+.prettier*
+vitest.config.*
+tsconfig.json
+dockerfile
+docker-compose.*
+
+# Development directories
+node_modules/
+coverage/
+.nyc_output/
+
+# Build artifacts
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test output
+test-workspace/
+demo-cli-workspace/
+examples/*/workspace/
+examples/*/output/
+profiles/
+output/
+
+# Archive
+archive-old-modules/
