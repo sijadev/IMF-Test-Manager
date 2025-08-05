@@ -1,0 +1,202 @@
+# ========================================
+# IMF Test Manager Docker Compose
+# ========================================
+
+version: '3.8'
+
+services:
+  # ========================================
+  # Production Service
+  # ========================================
+  imf-test-manager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: imf-test-manager
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - LOG_LEVEL=INFO
+      - PROFILES_DIR=/app/profiles
+      - OUTPUT_DIR=/app/output
+      - RESULTS_DIR=/app/results
+      - LOG_DIR=/app/logs
+    volumes:
+      # Persistent data storage
+      - profiles_data:/app/profiles
+      - output_data:/app/output
+      - results_data:/app/results
+      - logs_data:/app/logs
+      # Optional: Mount host directories
+      # - ./workspace/profiles:/app/profiles
+      # - ./workspace/output:/app/output
+      # - ./workspace/results:/app/results
+    ports:
+      - "3000:3000"
+    networks:
+      - imf-network
+    healthcheck:
+      test: ["CMD", "node", "dist/cli.js", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ========================================
+  # Development Service
+  # ========================================
+  imf-test-manager-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: imf-test-manager-dev
+    environment:
+      - NODE_ENV=development
+      - LOG_LEVEL=DEBUG
+    volumes:
+      # Mount source code for hot reload
+      - .:/app
+      - /app/node_modules
+      # Development data
+      - dev_profiles:/app/profiles
+      - dev_output:/app/output
+      - dev_results:/app/results
+      - dev_logs:/app/logs
+    ports:
+      - "3001:3000"
+      - "9229:9229"  # Debug port
+    networks:
+      - imf-network
+    command: npm run dev
+    profiles:
+      - development
+
+  # ========================================
+  # Test Service
+  # ========================================
+  imf-test-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: testing
+    container_name: imf-test-runner
+    environment:
+      - NODE_ENV=test
+      - CI=true
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - test_coverage:/app/coverage
+    networks:
+      - imf-network
+    command: npm test
+    profiles:
+      - testing
+
+  # ========================================
+  # Mock IMF Service (for testing)
+  # ========================================
+  mock-imf:
+    image: wiremock/wiremock:2.35.0
+    container_name: mock-imf
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./tests/mocks/wiremock:/home/wiremock
+    networks:
+      - imf-network
+    command: --global-response-templating --verbose
+    profiles:
+      - testing
+      - development
+
+  # ========================================
+  # PostgreSQL (for complex testing scenarios)
+  # ========================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: imf-postgres
+    environment:
+      - POSTGRES_DB=imf_test
+      - POSTGRES_USER=imf_user
+      - POSTGRES_PASSWORD=imf_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./tests/sql:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - imf-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U imf_user -d imf_test"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    profiles:
+      - testing
+      - development
+
+  # ========================================
+  # Redis (for caching test scenarios)
+  # ========================================
+  redis:
+    image: redis:7-alpine
+    container_name: imf-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - imf-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    profiles:
+      - testing
+      - development
+
+# ========================================
+# Networks
+# ========================================
+networks:
+  imf-network:
+    driver: bridge
+    name: imf-test-network
+
+# ========================================
+# Volumes
+# ========================================
+volumes:
+  # Production volumes
+  profiles_data:
+    name: imf_profiles_data
+  output_data:
+    name: imf_output_data
+  results_data:
+    name: imf_results_data
+  logs_data:
+    name: imf_logs_data
+  
+  # Development volumes
+  dev_profiles:
+    name: imf_dev_profiles
+  dev_output:
+    name: imf_dev_output
+  dev_results:
+    name: imf_dev_results
+  dev_logs:
+    name: imf_dev_logs
+  
+  # Test volumes
+  test_coverage:
+    name: imf_test_coverage
+  
+  # Database volumes
+  postgres_data:
+    name: imf_postgres_data
+  redis_data:
+    name: imf_redis_data

@@ -1,0 +1,151 @@
+{
+  "id": "performance-stress-test-001",
+  "name": "High-Load Performance Stress Test",
+  "version": "1.2.0",
+  "description": "Comprehensive performance testing profile for high-traffic microservices with memory leaks, CPU spikes, and database bottlenecks",
+  "createdAt": "2024-01-15T10:30:00.000Z",
+  "updatedAt": "2024-01-20T14:45:00.000Z",
+  
+  "sourceConfig": {
+    "directories": [
+      "/app/api-gateway",
+      "/app/user-service",
+      "/app/order-service",
+      "/app/payment-service"
+    ],
+    "languages": ["typescript", "javascript"],
+    "complexity": "complex",
+    "excludePatterns": ["node_modules", "dist", "*.log", "coverage", ".git"]
+  },
+  
+  "scenarios": [
+    {
+      "id": "memory-leak-scenario",
+      "name": "Progressive Memory Leak Simulation",
+      "type": "performance",
+      "duration": 900,
+      "enabled": true,
+      "problemTypes": [
+        "memory_leak",
+        "event_listener_leak",
+        "closure_leak",
+        "cache_overflow"
+      ],
+      "codeInjection": {
+        "errorTypes": [
+          "memory_leak",
+          "event_listener_leak",
+          "closure_leak"
+        ],
+        "frequency": 0.12,
+        "complexity": "complex",
+        "targetFiles": [
+          "/app/api-gateway/src/middleware/auth.ts",
+          "/app/user-service/src/services/user-cache.ts",
+          "/app/order-service/src/handlers/order-processor.ts"
+        ]
+      },
+      "metrics": {
+        "cpuPattern": "degradation",
+        "memoryPattern": "leak",
+        "logPattern": "error-heavy",
+        "networkPattern": "congestion"
+      }
+    },
+    {
+      "id": "cpu-spike-scenario",
+      "name": "CPU Intensive Operations",
+      "type": "stress-test",
+      "duration": 600,
+      "enabled": true,
+      "problemTypes": [
+        "infinite_loop",
+        "blocking_operation",
+        "cpu_intensive_regex",
+        "unoptimized_algorithm"
+      ],
+      "codeInjection": {
+        "errorTypes": [
+          "infinite_loop",
+          "blocking_operation",
+          "performance_issue"
+        ],
+        "frequency": 0.08,
+        "complexity": "complex"
+      },
+      "metrics": {
+        "cpuPattern": "spike",
+        "memoryPattern": "fragmentation",
+        "logPattern": "burst"
+      }
+    },
+    {
+      "id": "database-bottleneck-scenario",
+      "name": "Database Lock and Timeout Simulation",
+      "type": "integration",
+      "duration": 450,
+      "enabled": true,
+      "problemTypes": [
+        "database_lock",
+        "slow_query",
+        "connection_pool_exhaustion",
+        "deadlock"
+      ],
+      "codeInjection": {
+        "errorTypes": [
+          "database_lock",
+          "api_timeout",
+          "connection_timeout"
+        ],
+        "frequency": 0.15,
+        "complexity": "medium"
+      },
+      "metrics": {
+        "cpuPattern": "stable",
+        "memoryPattern": "stable",
+        "logPattern": "error-heavy"
+      }
+    }
+  ],
+  
+  "expectations": {
+    "detectionRate": 88,
+    "fixSuccessRate": 65,
+    "falsePositiveRate": 12,
+    "mlAccuracy": 82,
+    "processingTimeMs": 8000
+  },
+  
+  "generationRules": {
+    "sampleCount": 5000,
+    "varianceLevel": "high",
+    "timespan": "15m",
+    "errorDistribution": {
+      "memory_leak": 0.25,
+      "performance_issue": 0.20,
+      "database_lock": 0.15,
+      "api_timeout": 0.15,
+      "infinite_loop": 0.10,
+      "blocking_operation": 0.10,
+      "connection_timeout": 0.05
+    },
+    "seedValue": 987654321
+  },
+  
+  "outputConfig": {
+    "format": "json",
+    "compression": true,
+    "outputDir": "./performance-test-data",
+    "maxFileSize": 52428800
+  },
+  
+  "metadata": {
+    "tags": ["performance", "stress-test", "microservices", "production"],
+    "environment": "staging",
+    "author": "performance-team",
+    "version": "1.2.0",
+    "lastModified": "2024-01-20T14:45:00.000Z",
+    "testFrequency": "weekly",
+    "criticality": "high"
+  }
+}

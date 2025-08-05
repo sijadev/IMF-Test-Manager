@@ -1,0 +1,249 @@
+{
+  "id": "ml-training-comprehensive-001",
+  "name": "Comprehensive ML Training Dataset",
+  "version": "2.1.0",
+  "description": "Large-scale training dataset generation for ML-based code analysis and automated fix recommendation systems",
+  "createdAt": "2024-01-10T08:00:00.000Z",
+  "updatedAt": "2024-01-25T16:30:00.000Z",
+  
+  "sourceConfig": {
+    "directories": [
+      "/app/frontend/react-components",
+      "/app/backend/express-api",
+      "/app/services/data-processing",
+      "/app/utilities/helper-functions",
+      "/app/database/models",
+      "/app/authentication/oauth-service"
+    ],
+    "languages": ["typescript", "javascript", "python"],
+    "complexity": "complex",
+    "excludePatterns": [
+      "node_modules",
+      "dist",
+      "build", 
+      "*.log",
+      "coverage",
+      ".git",
+      "*.test.ts",
+      "*.spec.js"
+    ]
+  },
+  
+  "scenarios": [
+    {
+      "id": "syntax-error-training",
+      "name": "Syntax Error Pattern Training",
+      "type": "ml-training",
+      "duration": 1800,
+      "enabled": true,
+      "problemTypes": [
+        "syntax_error",
+        "missing_semicolon",
+        "bracket_mismatch",
+        "quote_mismatch",
+        "indentation_error"
+      ],
+      "codeInjection": {
+        "errorTypes": [
+          "syntax_error",
+          "type_mismatch",
+          "missing_import"
+        ],
+        "frequency": 0.25,
+        "complexity": "simple"
+      },
+      "metrics": {
+        "cpuPattern": "stable",
+        "memoryPattern": "stable",
+        "logPattern": "normal"
+      }
+    },
+    {
+      "id": "runtime-error-training",
+      "name": "Runtime Error Pattern Training",
+      "type": "ml-training",
+      "duration": 2400,
+      "enabled": true,
+      "problemTypes": [
+        "null_pointer",
+        "undefined_variable",
+        "type_error",
+        "range_error",
+        "reference_error"
+      ],
+      "codeInjection": {
+        "errorTypes": [
+          "null_pointer",
+          "undefined_variable",
+          "type_mismatch",
+          "array_bounds"
+        ],
+        "frequency": 0.20,
+        "complexity": "medium"
+      },
+      "metrics": {
+        "cpuPattern": "stable",
+        "memoryPattern": "stable",
+        "logPattern": "error-heavy"
+      }
+    },
+    {
+      "id": "logic-error-training",
+      "name": "Logic Error Pattern Training",
+      "type": "ml-training",
+      "duration": 3600,
+      "enabled": true,
+      "problemTypes": [
+        "logic_error",
+        "off_by_one",
+        "infinite_loop",
+        "wrong_operator",
+        "condition_error"
+      ],
+      "codeInjection": {
+        "errorTypes": [
+          "logic_error",
+          "infinite_loop",
+          "wrong_comparison"
+        ],
+        "frequency": 0.15,
+        "complexity": "complex"
+      },
+      "metrics": {
+        "cpuPattern": "spike",
+        "memoryPattern": "stable",
+        "logPattern": "burst"
+      }
+    },
+    {
+      "id": "security-vulnerability-training",
+      "name": "Security Vulnerability Pattern Training",
+      "type": "ml-training",
+      "duration": 1200,
+      "enabled": true,
+      "problemTypes": [
+        "sql_injection",
+        "xss_vulnerability",
+        "csrf_vulnerability",
+        "authentication_bypass",
+        "data_exposure"
+      ],
+      "codeInjection": {
+        "errorTypes": [
+          "security_vulnerability",
+          "injection_attack",
+          "weak_authentication"
+        ],
+        "frequency": 0.30,
+        "complexity": "complex"
+      },
+      "metrics": {
+        "cpuPattern": "stable",
+        "memoryPattern": "stable",
+        "logPattern": "error-heavy"
+      }
+    },
+    {
+      "id": "performance-issue-training",
+      "name": "Performance Issue Pattern Training",
+      "type": "ml-training",
+      "duration": 2700,
+      "enabled": true,
+      "problemTypes": [
+        "memory_leak",
+        "cpu_intensive",
+        "blocking_io",
+        "inefficient_algorithm",
+        "resource_exhaustion"
+      ],
+      "codeInjection": {
+        "errorTypes": [
+          "memory_leak",
+          "performance_issue",
+          "blocking_operation"
+        ],
+        "frequency": 0.18,
+        "complexity": "complex"
+      },
+      "metrics": {
+        "cpuPattern": "degradation",
+        "memoryPattern": "leak",
+        "logPattern": "normal"
+      }
+    }
+  ],
+  
+  "expectations": {
+    "detectionRate": 92,
+    "fixSuccessRate": 75,
+    "falsePositiveRate": 8,
+    "mlAccuracy": 88,
+    "processingTimeMs": 12000
+  },
+  
+  "generationRules": {
+    "sampleCount": 50000,
+    "varianceLevel": "high",
+    "timespan": "3h",
+    "errorDistribution": {
+      "syntax_error": 0.15,
+      "null_pointer": 0.15,
+      "type_mismatch": 0.12,
+      "logic_error": 0.12,
+      "security_vulnerability": 0.10,
+      "memory_leak": 0.10,
+      "performance_issue": 0.08,
+      "undefined_variable": 0.08,
+      "infinite_loop": 0.05,
+      "api_timeout": 0.05
+    },
+    "seedValue": 123456789
+  },
+  
+  "outputConfig": {
+    "format": "json",
+    "compression": true,
+    "outputDir": "./ml-training-datasets",
+    "maxFileSize": 104857600
+  },
+  
+  "validationSplit": {
+    "enabled": true,
+    "trainRatio": 0.8,
+    "validationRatio": 0.15,
+    "testRatio": 0.05
+  },
+  
+  "mlConfiguration": {
+    "featureEngineering": {
+      "enableASTFeatures": true,
+      "enableSemanticFeatures": true,
+      "enableContextualFeatures": true,
+      "maxFeatureVectorLength": 512
+    },
+    "augmentation": {
+      "enableSynonymReplacement": true,
+      "enableVariableRenaming": true,
+      "enableCodeReordering": false,
+      "augmentationRatio": 0.2
+    },
+    "balancing": {
+      "enableClassBalancing": true,
+      "minorityClassUpsampling": true,
+      "majorityClassDownsampling": false,
+      "targetBalance": 0.1
+    }
+  },
+  
+  "metadata": {
+    "tags": ["ml-training", "comprehensive", "multi-language", "production-ready"],
+    "environment": "training",
+    "author": "ml-team",
+    "version": "2.1.0",
+    "lastModified": "2024-01-25T16:30:00.000Z",
+    "datasetSize": "large",
+    "modelTargets": ["error-detection", "fix-recommendation", "severity-classification"],
+    "qualityScore": 9.2,
+    "reviewStatus": "approved"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "name": "imf-test-manager",
+  "version": "1.0.0",
+  "description": "Intelligent Monitoring Framework - Test Data Manager",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "cli": "tsx src/cli/simple-cli.ts",
+    "clean": "rm -rf dist",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write src/**/*.ts"
+  },
+  "bin": {
+    "imf-test-manager": "dist/cli/index.js",
+    "imf-test": "dist/cli/index.js"
+  },
+  "keywords": [
+    "monitoring",
+    "machine-learning",
+    "test-data",
+    "data-generation",
+    "imf"
+  ],
+  "author": "IMF Development Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.11.0",
+    "chalk": "^5.3.0",
+    "commander": "^11.1.0",
+    "date-fns": "^2.30.0",
+    "fs-extra": "^11.1.1",
+    "inquirer": "^9.2.12",
+    "ora": "^7.0.1",
+    "uuid": "^9.0.1",
+    "yaml": "^2.3.4",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.8.0",
+    "@types/uuid": "^9.0.6",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "@vitest/coverage-v8": "^0.34.6",
+    "eslint": "^8.51.0",
+    "prettier": "^3.0.3",
+    "tsx": "^3.14.0",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
