@@ -6,10 +6,10 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk').default || require('chalk');
 
-export type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'fatal';
-export type LogOutput = 'console' | 'file' | 'both';
+type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'fatal';
+type LogOutput = 'console' | 'file' | 'both';
 
-export interface LogEntry {
+interface LogEntry {
   timestamp: Date;
   level: LogLevel;
   component: string;
@@ -18,7 +18,7 @@ export interface LogEntry {
   error?: Error;
 }
 
-export interface LoggerConfig {
+interface LoggerConfig {
   level: LogLevel;
   output: LogOutput;
   logDir: string;
@@ -32,7 +32,7 @@ export interface LoggerConfig {
 /**
  * Centralized logging utility for IMF Test Manager
  */
-export class Logger {
+class Logger {
   private static globalConfig: LoggerConfig = {
     level: 'info',
     output: 'console',

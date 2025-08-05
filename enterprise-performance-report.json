@@ -1,0 +1,60 @@
+{
+  "reportId": "report-1754411840222",
+  "generatedAt": "2025-08-05T16:37:20.222Z",
+  "timeRange": {
+    "start": "2025-08-04T16:37:20.222Z",
+    "end": "2025-08-05T16:37:20.222Z"
+  },
+  "summary": {
+    "totalOperations": 1,
+    "averageDuration": 17548,
+    "minDuration": 17548,
+    "maxDuration": 17548,
+    "operationTypes": {
+      "enterprise_workflow": 1
+    },
+    "successRate": 100
+  },
+  "topBottlenecks": [
+    {
+      "operationName": "enterprise_workflow",
+      "averageDuration": 17548,
+      "occurrences": 1,
+      "impactScore": 17548
+    }
+  ],
+  "memoryAnalysis": {
+    "averageMemoryUsage": -2498072,
+    "peakMemoryUsage": -2498072,
+    "memoryLeakIndicators": []
+  },
+  "recommendations": [
+    "Average operation duration exceeds threshold - consider optimization",
+    "Focus optimization efforts on: enterprise_workflow"
+  ],
+  "detailedMetrics": [
+    {
+      "operationName": "enterprise_workflow",
+      "executionId": "enterprise_workflow-1754411822674-lz7ncw28j",
+      "startTime": "2025-08-05T16:37:02.674Z",
+      "endTime": "2025-08-05T16:37:20.222Z",
+      "duration": 17548,
+      "memoryUsage": {
+        "rss": -704512,
+        "heapUsed": -2498072,
+        "heapTotal": -8650752,
+        "external": -258296,
+        "arrayBuffers": -258336
+      },
+      "cpuUsage": {
+        "user": 116714,
+        "system": 14234
+      },
+      "customMetrics": {},
+      "metadata": {
+        "demo": true,
+        "complexity": "high"
+      }
+    }
+  ]
+}

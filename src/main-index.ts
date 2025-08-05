@@ -5,6 +5,12 @@
 // Core working components
 const { Logger, createLogger } = require('./generators/logger');
 
+// Enterprise components
+const { IMFIntegrationAdapter, createIMFAdapter } = require('./adapters/imf-integration-adapter');
+const { ScenarioExecutor, createScenarioExecutor, createSimpleWorkflow } = require('./core/scenario-executor');
+const { TestDataLoaderPlugin, createTestDataLoaderPlugin, DefaultIMFStorage, DefaultMLService } = require('./plugins/test-data-loader');
+const { PerformanceMonitor, createPerformanceMonitor } = require('./utils/performance-monitoring');
+
 // Type exports - basic types that work
 const types = require('./types');
 
@@ -85,14 +91,27 @@ module.exports = {
   IMFTestManager,
   Logger,
   
+  // Enterprise classes
+  IMFIntegrationAdapter,
+  ScenarioExecutor,
+  TestDataLoaderPlugin,
+  PerformanceMonitor,
+  DefaultIMFStorage,
+  DefaultMLService,
+  
   // Factory functions
   createTestManager,
   createLogger,
+  createIMFAdapter,
+  createScenarioExecutor,
+  createSimpleWorkflow,
+  createTestDataLoaderPlugin,
+  createPerformanceMonitor,
   
   // Types
   ...types,
   
   // Version info
-  VERSION: '1.0.0',
+  VERSION: '2.0.0', // Updated for enterprise features
   BUILD_DATE: new Date().toISOString()
 };
