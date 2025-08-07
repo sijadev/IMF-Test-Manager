@@ -1,10 +1,10 @@
-# IMF Test Manager
+# MCP.Guard-Testmanager
 
-Ein spezialisiertes Tool zur Generierung von Testdaten für das Intelligent Monitoring Framework (IMF).
+Ein spezialisiertes Tool zur Generierung von Testdaten für das System MCP.Guard.
 
 ## 🎯 Zweck
 
-Der IMF Test Manager erstellt strukturierte Testprofile und generiert realistische Testdaten für:
+Der MCP.Guard-Testmanager erstellt strukturierte Testprofile und generiert realistische Testdaten für:
 - **ML-Model Training**: Verschiedene Code-Problem-Szenarien
 - **Performance Testing**: CPU/Memory/Network-Belastungsszenarien  
 - **Log-Analyse**: Fehlerhafte und normale Log-Patterns
@@ -22,16 +22,16 @@ npm link  # Für globale CLI-Nutzung
 
 ```bash
 # Neues Testprofil erstellen
-imf-test-manager create-profile "API Performance" /app/api-server medium
+MCP.Guard-Testmanager create-profile "API Performance" /app/api-server medium
 
 # Testdaten generieren
-imf-test-manager generate-data profile-123
+MCP.Guard-Testmanager generate-data profile-123
 
-# Vollständigen Test mit IMF ausführen
-imf-test-manager execute-test profile-123 http://localhost:3000
+# Vollständigen Test mit MCP.Guard ausführen
+MCP.Guard-Testmanager execute-test profile-123 http://localhost:3000
 
 # Profile auflisten
-imf-test-manager list-profiles
+MCP.Guard-Testmanager list-profiles
 ```
 
 ## 📊 Testprofil-Struktur
@@ -64,7 +64,7 @@ imf-test-manager list-profiles
 ## 🔧 Programmierung-Interface
 
 ```typescript
-import { TestProfileManager, IMFAdapter } from 'imf-test-manager';
+import { TestProfileManager, MCP.GuardAdapter } from 'MCP.Guard-Testmanager';
 
 const manager = new TestProfileManager();
 const profile = await manager.createProfile({
@@ -73,8 +73,8 @@ const profile = await manager.createProfile({
 });
 
 const testData = await manager.generateTestData(profile);
-const imfAdapter = new IMFAdapter('http://localhost:3000');
-const results = await imfAdapter.executeTest(profile.id);
+const MCP.GuardAdapter = new MCP.GuardAdapter('http://localhost:3000');
+const results = await MCP.GuardAdapter.executeTest(profile.id);
 ```
 
 ## 📁 Projekt-Struktur
@@ -83,7 +83,7 @@ const results = await imfAdapter.executeTest(profile.id);
 src/
 ├── core/           # Kern-Funktionalitäten
 ├── generators/     # Daten-Generatoren
-├── adapters/       # IMF-Integration
+├── adapters/       # MCP.Guard-Integration
 ├── cli/           # Command-Line Interface
 └── types/         # TypeScript-Definitionen
 
